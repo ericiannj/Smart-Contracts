@@ -1,6 +1,16 @@
-# Basic Sample Hardhat Project
+# Smart Contracts 
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+The repository is the project that works on the smart contracts necessary for Web3Vote to work. The basic Stack is solidity with the use of Hardhat.
+
+## Installation
+
+Use NPM to install the dependencies 
+
+```bash
+npm install
+```
+
+## Usage
 
 Try running some of the following tasks:
 
@@ -12,4 +22,9 @@ npx hardhat test
 npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
+
+// The basic flow: Test scripts + Deploy to create a new blockchain
+
+npx hardhat run scripts/run.js
+npx hardhat run scripts/deploy-ballot.js --network goerli
 ```
