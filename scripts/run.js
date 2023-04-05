@@ -16,13 +16,16 @@ const main = async () => {
   const ballotExample = {
     title : 'Qual o melhor do mundo?',
     description :'Gostaríamos de saber quem é o maior atleta.',
-    p1:{name: 'Pelé', order: 0, numberOfVotes: 0},
-    p2: {name: 'Michael Jordan', order: 1, numberOfVotes: 0},
-    p3:{name: 'Lewis Hamilton', order: 2, numberOfVotes: 0},
-    p4: {name: 'Michael Phelps', order: 3, numberOfVotes: 0},
+    proposals: ['Pelé',  'Michael Jordan', 'Lewis Hamilton',  'Michael Phelps']
+    // proposals: [
+    //   {name: 'Pelé', order: 0},
+    //   {name: 'Michael Jordan', order: 1},
+    //   {name: 'Lewis Hamilton', order: 2},
+    //   {name: 'Michael Phelps', order: 3}
+    // ],
   }
 // ballotExample.p1, ballotExample.p2, ballotExample.p3, ballotExample.p4
-  ballotTxn = await ballotContract.createBallot(ballotExample.title, ballotExample.description);
+  ballotTxn = await ballotContract.createBallot(ballotExample.title, ballotExample.description, ballotExample.proposals);
   // ballotTxn = await ballotContract.createBallot({
   //   title: ballotExample.title, 
   //   description: ballotExample.description, 
@@ -35,7 +38,7 @@ const main = async () => {
   let ballots = await ballotContract.getAllBallots();
   console.log('1', ballots)
 
-  ballotTxn = await ballotContract.createBallot(ballotExample.title, ballotExample.description);
+  ballotTxn = await ballotContract.createBallot(ballotExample.title, ballotExample.description, ballotExample.proposals);
   await ballotTxn.wait(); 
   let ballots2 = await ballotContract.getAllBallots();
   console.log('2', ballots2)
