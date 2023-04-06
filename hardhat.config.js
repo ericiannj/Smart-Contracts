@@ -22,7 +22,11 @@ module.exports = {
   networks: {
     goerli: {
       url: process.env.GOERLI_API_URL,
-      accounts: [process.env.PRIVATE_GOERLI_ACCOUNT_KEY]
+      accounts: [process.env.PRIVATE_ACCOUNT_KEY]
     },
+    sepolia: {
+      url: process.env.SEPOLIA_API_URL,
+      accounts: [process.env.PRIVATE_ACCOUNT_KEY]
+    }
   },
 };
