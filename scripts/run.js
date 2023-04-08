@@ -1,72 +1,24 @@
 const main = async () => {
-  // const voteContractFactory = await hre.ethers.getContractFactory("VotePortal");
-  // const voteContract = await voteContractFactory.deploy();
-  // await voteContract.deployed();
-  // console.log("Endereço do contrato:", voteContract.address);
-
   const ballotContractFactory = await hre.ethers.getContractFactory("BallotPortal");
   const ballotContract = await ballotContractFactory.deploy();
   await ballotContract.deployed();
   console.log("Endereço do contrato:", ballotContract.address);
 
-  // let voteCount;
-  // voteCount = await voteContract.getTotalVotes();
-  // console.log(voteCount.toNumber());
-
   const ballotExample = {
     title : 'Qual o melhor do mundo?',
     description :'Gostaríamos de saber quem é o maior atleta.',
     proposals: ['Pelé',  'Michael Jordan', 'Lewis Hamilton',  'Michael Phelps']
-    // proposals: [
-    //   {name: 'Pelé', order: 0},
-    //   {name: 'Michael Jordan', order: 1},
-    //   {name: 'Lewis Hamilton', order: 2},
-    //   {name: 'Michael Phelps', order: 3}
-    // ],
   }
-// ballotExample.p1, ballotExample.p2, ballotExample.p3, ballotExample.p4
+
   ballotTxn = await ballotContract.createBallot(ballotExample.title, ballotExample.description, ballotExample.proposals);
-  // ballotTxn = await ballotContract.createBallot({
-  //   title: ballotExample.title, 
-  //   description: ballotExample.description, 
-  //   // p1: ballotExample.p1, 
-  //   // p2: ballotExample.p2, 
-  //   // p3:ballotExample.p3, 
-  //   // p4: ballotExample.p4
-  // });
   await ballotTxn.wait(); 
   let ballots = await ballotContract.getAllBallots();
-  console.log('1', ballots)
+  console.log('List of Ballots:', ballots)
 
-  ballotTxn = await ballotContract.createBallot(ballotExample.title, ballotExample.description, ballotExample.proposals);
-  await ballotTxn.wait(); 
+  newBallotTxn = await ballotContract.deleteBallot(0, true);
+  await newBallotTxn.wait();
   let ballots2 = await ballotContract.getAllBallots();
-  console.log('2', ballots2)
-
-  // const [_, randomPerson] = await hre.ethers.getSigners();
-  // voteTxn = await voteContract.connect(randomPerson).vote(test.title, test.description);
-  // await voteTxn.wait(); 
-
-  // let allBallots = await ballotContract.getAllBallots();
-  // console.log(allBallots);
-
-  // let voteTxn;
-  // voteTxn = await ballotContract.vote(allBallots[0], 2)
-  // await voteTxn.wait();
-
-  // console.log('--------RESULTADO---------')
-  // let secondBallots = await ballotContract.getAllBallots();
-  // console.log(secondBallots);
-
-  // let voteTxn = await voteContract.vote(test.title, test.description);
-  // await voteTxn.wait(); 
-
-  // const [_, randomPerson] = await hre.ethers.getSigners();
-  // voteTxn = await voteContract.connect(randomPerson).vote(test.title, test.description);
-  // await voteTxn.wait(); 
-
-  // let allVotes = await voteContract.getAllVotes();
-  // console.log(allVotes);
+  console.log('Change on Deleted:', ballots2)
 };
 
 const runMain = async () => {

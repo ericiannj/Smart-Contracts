@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 
 contract BallotPortal {
     uint256 totalBallots;
-    uint256 proposalIds;
+    uint256 ballotsIds;
 
     event NewBallot(Ballot _ballot);
 
@@ -20,11 +20,13 @@ contract BallotPortal {
     }
 
     struct Ballot {
+        uint256 id;
         address author; 
         uint256 timestamp; 
         string title; 
         string description;
         string[] proposals;
+        bool deleted;
         // Proposal p1;
         // Proposal p2;
         // Proposal p3;
@@ -76,6 +78,7 @@ contract BallotPortal {
 
     function createBallot(string memory _title, string memory _description, string[] memory _texts) public returns (Ballot memory) {
         totalBallots += 1;
+        ballotsIds +=1;
         console.log("%s criou uma votacao com o titulo: %s", msg.sender, _title);
 
         // proposalIds = 0;
@@ -97,14 +100,23 @@ contract BallotPortal {
         // return idToProposal[newProposalId];
 
         Ballot memory createdBallot = Ballot({
+                id: ballotsIds,
                 author: msg.sender, 
                 timestamp: block.timestamp, 
                 title: _title, 
                 description: _description,
-                proposals: _texts
+                proposals: _texts,
+                deleted: false
             });
         ballots.push(createdBallot);
         return createdBallot;
+    }
+
+    function deleteBallot(uint256 id, bool newValue) public returns (Ballot memory) {
+        Ballot storage selectedBallot = ballots[id];
+        selectedBallot.deleted = newValue;
+
+        return selectedBallot;
     }
 
     function getAllBallots() public view returns (Ballot[] memory) {
