@@ -8,12 +8,19 @@ contract BallotPortal {
     uint256 totalBallots;
     uint256 ballotsIds;
 
-    event NewBallot(Ballot _ballot);
+    // event NewBallot(Ballot _ballot);
 
     struct Proposal {
       uint256 id;
       string text;
       uint256 votes;
+    }
+
+    struct Historical {
+      uint256 id;
+      address voter;
+      uint256 timestamp;
+      uint256 proposalId;
     }
 
     struct Ballot {
@@ -23,6 +30,7 @@ contract BallotPortal {
         string title; 
         string description;
         Proposal[] proposals;
+        Historical[] historic;
         bool disabled;
         bool deleted;
     }
@@ -53,6 +61,7 @@ contract BallotPortal {
         newBallot.description = _description;
         newBallot.disabled = false;
         newBallot.deleted = false;
+        newBallot.historic.push();
 
         for (uint256 i = 0; i < _texts.length; i++) {
             Proposal memory newProposal;
@@ -87,8 +96,30 @@ contract BallotPortal {
         return totalBallots;
     }
 
+    function _isBallotDisabled(Ballot storage ballot) internal view returns (bool) {
+        return ballot.disabled;
+    }
+
+    function _isBallotDeleted(Ballot storage ballot) internal view returns (bool) {
+        return ballot.deleted;
+    }
+
     function vote(uint256 ballotIndex, uint256 proposalIndex) public returns (Ballot memory) {
+        require(ballotIndex < ballots.length, "Ballot does not exist");
+        require(!_isBallotDisabled(ballots[ballotIndex]), "Ballot is disabled");
+        require(!_isBallotDeleted(ballots[ballotIndex]), "Ballot is deleted");
+        require(proposalIndex < ballots[ballotIndex].proposals.length, "Proposal does not exist");
+
         Ballot storage selectedBallot = ballots[ballotIndex];
+
+        uint256 newHistoricalId = ballots[ballotIndex].historic.length;
+        ballots[ballotIndex].historic.push(Historical({
+            id: newHistoricalId, 
+            voter: msg.sender,
+            timestamp: block.timestamp, 
+            proposalId: proposalIndex
+        }));
+
         Proposal storage selectedProposal = selectedBallot.proposals[proposalIndex];
         selectedProposal.votes++;
 

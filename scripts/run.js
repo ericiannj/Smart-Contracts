@@ -22,15 +22,20 @@ const main = async () => {
   let ballots2 = await ballotContract.getAllBallots();
   console.log('3. Vote on one proposal:', ballots2)
 
-  ballotTxn = await ballotContract.disableBallot(0, true);
+  ballotTxn = await ballotContract.vote(0, 1);
   await ballotTxn.wait();
   let ballots3 = await ballotContract.getAllBallots();
-  console.log('4. Change on Disabled:', ballots3)
+  console.log('4. Vote on one another proposal:', ballots3)
+
+  ballotTxn = await ballotContract.disableBallot(0, true);
+  await ballotTxn.wait();
+  let ballots4 = await ballotContract.getAllBallots();
+  console.log('5. Change on Disabled:', ballots4)
 
   ballotTxn = await ballotContract.deleteBallot(0, true);
   await ballotTxn.wait();
-  let ballots4 = await ballotContract.getAllBallots();
-  console.log('5. Change on Deleted:', ballots4);
+  let ballots5 = await ballotContract.getAllBallots();
+  console.log('6. Change on Deleted:', ballots5);
 };
 
 const runMain = async () => {
