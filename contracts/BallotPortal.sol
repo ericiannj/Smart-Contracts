@@ -8,8 +8,6 @@ contract BallotPortal {
     uint256 totalBallots;
     uint256 ballotsIds;
 
-    // event NewBallot(Ballot _ballot);
-
     struct Proposal {
       uint256 id;
       string text;
@@ -44,7 +42,7 @@ contract BallotPortal {
     Ballot[] public ballots;
 
     constructor() {
-        console.log("Ballot Smart Contract");
+        console.log("Ballot Smart Contract foi criado");
     }
 
     function createBallot(string memory _title, string memory _description, string[] memory _texts) public {
@@ -126,3 +124,4 @@ contract BallotPortal {
         return selectedBallot;
     }
 }
+
