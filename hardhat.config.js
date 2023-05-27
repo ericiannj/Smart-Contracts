@@ -29,4 +29,10 @@ module.exports = {
       accounts: [process.env.PRIVATE_ACCOUNT_KEY]
     }
   },
+  scripts: {
+    benchmark: {
+      description: 'Executa o benchmark do contrato',
+      script: './scripts/benchmark.js'
+    }
+  }
 };

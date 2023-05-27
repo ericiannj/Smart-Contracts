@@ -48,7 +48,7 @@ contract BallotPortal {
     function createBallot(string memory _title, string memory _description, string[] memory _texts) public {
         totalBallots += 1;
         ballotsIds +=1;
-        console.log("%s criou uma votacao com o titulo: %s", msg.sender, _title);
+        // console.log("%s criou uma votacao com o titulo: %s", msg.sender, _title);
 
         Ballot storage newBallot = ballots.push();
 
