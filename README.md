@@ -23,8 +23,8 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 
-// The basic flow: Test scripts + Deploy to create a new blockchain
+// The basic flow: Test scripts + Deploy to create a new smart contract version
 
 npx hardhat run scripts/run.js
-npx hardhat run scripts/deploy-ballot.js --network goerli
+npx hardhat run scripts/deploy-ballot.js --network sepolia
 ```
